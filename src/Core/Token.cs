@@ -69,6 +69,7 @@ namespace FoxSharp
         SEMICOLON,
         DOT,
         COLON,
+        BINDING,
 
         LPAREN,
         RPAREN,

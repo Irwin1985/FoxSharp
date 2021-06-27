@@ -283,8 +283,14 @@ namespace FoxSharp
                     tok.literal = ".";
                     break;
                 case ':':
-                    tok.type = TokenType.COLON;
-                    tok.literal = ":";
+                    if (stringReader.Peek() == '='){
+                        NextChar();
+                        tok.type = TokenType.BINDING;
+                        tok.literal = ":="; // pascal binding sintax
+                    } else {
+                        tok.type = TokenType.COLON;
+                        tok.literal = ":";
+                    }
                     break;
                 case ';':
                     tok.type = TokenType.SEMICOLON;
