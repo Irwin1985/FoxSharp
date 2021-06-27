@@ -42,11 +42,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ast\ArrayLiteral.cs" />
+    <Compile Include="Ast\BlockStatement.cs" />
+    <Compile Include="Ast\BooleanLiteral.cs" />
+    <Compile Include="Ast\CallExpression.cs" />
+    <Compile Include="Ast\ExpressionStatement.cs" />
+    <Compile Include="Ast\FloatLiteral.cs" />
+    <Compile Include="Ast\FunctionLiteral.cs" />
+    <Compile Include="Ast\HashLiteral.cs" />
+    <Compile Include="Ast\Identifier.cs" />
+    <Compile Include="Ast\IfExpression.cs" />
+    <Compile Include="Ast\IndexExpression.cs" />
+    <Compile Include="Ast\InfixExpression.cs" />
+    <Compile Include="Ast\IntegerLiteral.cs" />
+    <Compile Include="Ast\Interfaces.cs" />
+    <Compile Include="Ast\Null.cs" />
+    <Compile Include="Ast\PrefixExpression.cs" />
+    <Compile Include="Ast\ReturnStatement.cs" />
+    <Compile Include="Ast\StringLiteral.cs" />
+    <Compile Include="Ast\VarStatement.cs" />
+    <Compile Include="Ast\Program.cs" />
     <Compile Include="Core.cs" />
-    <Compile Include="Scanner.cs" />
+    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Scanner\Scanner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringReader.cs" />
-    <Compile Include="Token.cs" />
+    <Compile Include="Scanner\StringReader.cs" />
+    <Compile Include="Token\Token.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
