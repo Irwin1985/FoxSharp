@@ -10,22 +10,20 @@ namespace FoxSharp
     {
         public void Run(string source)
         {
-            try
-            {
+            try{
                 FoxSharp.Scanner scanner = new FoxSharp.Scanner();
                 scanner.ReadString(source);
-
-                var tok = scanner.NextToken();
-                while (tok.type != TokenType.EOF)
-                {
-                    System.Windows.Forms.MessageBox.Show(tok.ToString(), "FoxSharp Debbuger");
-                    tok = scanner.NextToken();
+                FoxSharp.Parser parser = new FoxSharp.Parser(scanner);
+                var program = parser.ParseProgram();
+                var errors = parser.GetErrors();
+                if (errors.Count > 0){
+                    foreach (var msg in errors){
+                        Console.WriteLine("Error: " + msg);
+                    }
                 }
-                Console.WriteLine(tok.ToString());
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
+                System.Windows.Forms.MessageBox.Show(program.Inspect(), "Respuesta del Parser");
+            }catch (Exception e){
+                System.Windows.Forms.MessageBox.Show(e.Message, "FoxSharp Error");
             }
             //System.Windows.Forms.MessageBox.Show(source, "FoxSharp");
         }

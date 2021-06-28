@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class Null : IExpression
+    public class NullLiteral : IExpression
     {
         public string Inspect()
         {

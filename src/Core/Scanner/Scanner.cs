@@ -9,8 +9,6 @@ namespace FoxSharp
     public class Scanner
     {
         private const char EOF_CHAR = (char)0;
-        private int lineNumber = 0;
-        private int columnNumber = 0;
         private char ch;
         private bool inMultipleComment = false;
         private StringReader stringReader;
@@ -37,8 +35,6 @@ namespace FoxSharp
 
         void StartScanner()
         {
-            lineNumber = 1;
-            columnNumber = 0;
             FillKeywords();
             NextChar();
         }
@@ -52,7 +48,6 @@ namespace FoxSharp
             keywords.Add("null", TokenType.NULL);
             keywords.Add("and", TokenType.AND);
             keywords.Add("or", TokenType.OR);
-            keywords.Add("xor", TokenType.XOR);
             keywords.Add("if", TokenType.IF);
             keywords.Add("else", TokenType.ELSE);
             keywords.Add("return", TokenType.RETURN);
@@ -61,28 +56,18 @@ namespace FoxSharp
             keywords.Add("while", TokenType.WHILE);
             keywords.Add("for", TokenType.FOR);
             keywords.Add("smtp", TokenType.SMTP);
-            keywords.Add("info", TokenType.INFO);
-            keywords.Add("error", TokenType.ERROR);
-            keywords.Add("warning", TokenType.WARNING);
-            keywords.Add("panic", TokenType.PANIC);
         }
 
-        TokenType LookupIdent(string key)
-        {
-            if (keywords.ContainsKey(key))
-            {
+        TokenType LookupIdent(string key){
+            if (keywords.ContainsKey(key)){
                 return keywords[key];
             }
             return TokenType.IDENT;
         }
-        char ReadChar()
-        {
-            if (stringReader.IsAtEnd())
-            {
+        char ReadChar(){
+            if (stringReader.IsAtEnd()){
                 return EOF_CHAR;
             }
-
-            columnNumber += 1; // increase column number
             return stringReader.Read();
         }
         char GetOSIndependentChar(){
@@ -99,97 +84,75 @@ namespace FoxSharp
             }
             return ch;
         }
-        void NextChar()
-        {
+        void NextChar(){
             ch = GetOSIndependentChar();
-            while (ch == '\n')
-            {
-                lineNumber += 1;
-                columnNumber = 0;
+            while (ch == '\n'){
                 ch = GetOSIndependentChar();
             }            
         }
-        bool IsWhitespace(char ch)
-        {
-            return ch == ' ' || ch == '\t' || ch == '\r';
+        bool IsWhitespace(char ch){
+            return ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n';
         }
-        bool IsDigit(char ch)
-        {
+        bool IsDigit(char ch){
             return '0' <= ch && ch <= '9';
         }
-        bool IsSpecial(char ch)
-        {
+        bool IsSpecial(char ch){
             return "=+-*/!^<>,.:;(){}[]".Contains(ch);
         }
-        bool IsLetter(char ch)
-        {
+        bool IsLetter(char ch){
             return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_';
         }
-        void SkipBlanksAndComments()
-        {
-            while (IsWhitespace(ch) || ch == '/')
-            {
-                if (IsWhitespace(ch))
-                {
+        void SkipBlanksAndComments(){
+            while (IsWhitespace(ch) || ch == '/'){
+                if (IsWhitespace(ch)){
                     NextChar();
-                } else
-                {
+                } else{
                     // we have a '/' here
-                    if (stringReader.Peek() == '/')
-                    {
+                    if (stringReader.Peek() == '/'){
                         SkipSingleComment();
-                    } else if (stringReader.Peek() == '*')
-                    {
+                    } else if (stringReader.Peek() == '*'){
                         SkipMultipleComment();
-                    } else
-                    {
+                    } else{
                         break; // is not a comment nor a space thus keep lexing
                     }
                 }
             }
         }
-        void SkipSingleComment()
-        {
-            while (ch != EOF_CHAR && ch != '\n')
-            {
+        void SkipWhitespace(){
+            while (IsWhitespace(ch)){
+                NextChar();
+            }
+        }
+        void SkipSingleComment(){
+            while (ch != EOF_CHAR && ch != '\n'){
                 ch = GetOSIndependentChar();
             }
             if (ch != EOF_CHAR){
                 NextChar(); // skip LF
             }
-            lineNumber += 1;
-            columnNumber = 0;
         }
-        void SkipMultipleComment()
-        {
+        void SkipMultipleComment(){
             inMultipleComment = true;
             NextChar(); // skip the '/'
-            while (true)
-            {
-                while (ch != EOF_CHAR && ch != '*')
-                {
+            while (true){
+                while (ch != EOF_CHAR && ch != '*'){
                     NextChar();
                 }
                 if (ch == EOF_CHAR) break; // we've reached EOF :(
                 NextChar(); // advance the '*'
-                if (ch == '/')
-                {
+                if (ch == '/'){
                     NextChar();
-                    lineNumber += 1;
                     inMultipleComment = false;
                     break;
                 }
-
             }
         }
-        Token ReadSpecial()
-        {
+        Token ReadSpecial(){
             Token tok = new Token();
             tok.lineNumber = stringReader.GetLineNumber();
             tok.columnNumber = stringReader.GetColumnNumber();
 
-            switch (ch)
-            {
+            switch (ch){
                 case '=':
                     if (stringReader.Peek() == '='){
                         NextChar();
@@ -326,15 +289,13 @@ namespace FoxSharp
             NextChar();
             return tok;
         }
-        Token ReadNumber()
-        {
+        Token ReadNumber(){
             Token tok = new Token();
             tok.lineNumber = stringReader.GetLineNumber();
             tok.columnNumber = stringReader.GetColumnNumber();
 
             string lexeme = "";
-            while (ch != EOF_CHAR && (IsDigit(ch) || ch == '.'))
-            {
+            while (ch != EOF_CHAR && (IsDigit(ch) || ch == '.')){
                 lexeme += ch;
                 NextChar();
             }            
@@ -347,8 +308,7 @@ namespace FoxSharp
 
             return tok;
         }
-        Token ReadString()
-        {
+        Token ReadString(){
             Token tok = new Token();
             tok.type = TokenType.STRING;
             tok.lineNumber = stringReader.GetLineNumber();
@@ -391,15 +351,13 @@ namespace FoxSharp
 
             return tok;
         }
-        Token ReadIdentifier()
-        {
+        Token ReadIdentifier(){
             Token tok = new Token();
             tok.lineNumber = stringReader.GetLineNumber();
             tok.columnNumber = stringReader.GetColumnNumber();
 
             string lexeme = "";
-            while (ch != EOF_CHAR && IsLetter(ch))
-            {
+            while (ch != EOF_CHAR && IsLetter(ch)){
                 lexeme += ch;
                 NextChar();                
             }
@@ -407,13 +365,23 @@ namespace FoxSharp
             tok.literal = lexeme;
             return tok;
         }
-        public Token NextToken()
-        {
-            while (ch != EOF_CHAR)
-            {
-                SkipBlanksAndComments();
+        public Token NextToken(){
+            while (ch != EOF_CHAR){
+                if (IsWhitespace(ch)){
+                    SkipWhitespace();
+                    continue;
+                }
+                if (ch == '/'){
+                    if (stringReader.Peek() == '/'){
+                        SkipSingleComment();
+                        continue;
+                    } else if (stringReader.Peek() == '*'){
+                        SkipMultipleComment();
+                        continue;
+                    }
+                }                
                 
-                if (IsDigit(ch) || ch == '.'){
+                if (IsDigit(ch)){
                     return ReadNumber();
                 }
 
@@ -430,8 +398,8 @@ namespace FoxSharp
                 }
                 int lineNumber = stringReader.GetLineNumber();
                 int columnNumber = stringReader.GetColumnNumber();
-                var msg = String.Format("'{0}' at [{1}:{2}]", ch, lineNumber, columnNumber);
-                throw new Exception("lexer: unknown character " + msg);
+                var msg = String.Format("lexer: unknown character at [{0}:{1}]", lineNumber, columnNumber);
+                throw new Exception(msg);
             }            
             if (inMultipleComment){
                 throw new Exception("detected unterminated comment, expecting '*/'.");

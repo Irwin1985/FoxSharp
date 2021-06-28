@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class VarStatement : IStatement
+    public class VarStatement : IStatement
     {
         public Token Token;
         public Identifier Name;
@@ -18,7 +18,7 @@ namespace FoxSharp
         }
         public string Inspect()
         {
-            return String.Format("var {0} = {1}", "pepe", Value.Inspect());
+            return String.Format("var {0} = {1}", Name.Inspect(), Value.Inspect());
         }
 
 

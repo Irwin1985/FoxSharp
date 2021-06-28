@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class ArrayLiteral : IExpression
+    public class ArrayLiteral : IExpression
     {
         public Token Token;
         public List<IExpression> Elements;

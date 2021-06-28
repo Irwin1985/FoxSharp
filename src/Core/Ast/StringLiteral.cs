@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class StringLiteral : IExpression
+    public class StringLiteral : IExpression
     {
         public Token Token;
         public string Value;
         public StringLiteral() { }
-        public StringLiteral(Token token)
-        {
+        public StringLiteral(Token token, string value){
             this.Token = token;
+            this.Value = value;
         }
         public string Inspect()
         {
-            return Value;
+            return String.Format("\"{0}\"", Value);
         }
     }
 }

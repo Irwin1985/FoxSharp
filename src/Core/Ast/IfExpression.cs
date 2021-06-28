@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class IfExpression : IExpression
+    public class IfExpression : IExpression
     {
         public Token Token;
         public IExpression Condition;
@@ -23,7 +23,7 @@ namespace FoxSharp
             output.Append(String.Format("if({0}){1}", Condition.Inspect(), Consequence.Inspect()));
             if (Alternative != null)
             {
-                output.Append(String.Format("else{0}", Alternative.Inspect()));
+                output.Append(String.Format(" else{0} ", Alternative.Inspect()));
             }
             return output.ToString();
         }

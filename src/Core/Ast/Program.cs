@@ -22,7 +22,7 @@ namespace FoxSharp
             {
                 foreach (var stmt in Statements)
                 {
-                    output.Append(stmt.Inspect());
+                    output.Append(stmt.Inspect() + ";");
                 }
             }
             return output.ToString();

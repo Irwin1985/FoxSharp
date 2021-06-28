@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class IntegerLiteral : IExpression
+    public class IntegerLiteral : IExpression
     {
         public Token Token;
         public int Value;
         public IntegerLiteral() { }
-        public IntegerLiteral(Token token)
+        public IntegerLiteral(Token token, int value)
         {
             this.Token = token;
+            this.Value = value;
         }
         public String Inspect()
         {

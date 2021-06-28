@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class InfixExpression : IExpression
+    public class InfixExpression : IExpression
     {
         public Token Token;
         public IExpression Left;
@@ -17,14 +17,18 @@ namespace FoxSharp
         {
             this.Token = token;
         }
-        public InfixExpression(Token token, string _operator)
+        public InfixExpression(Token token, string _operator, IExpression left)
         {
             this.Token = token;
             this.Operator = _operator;
+            this.Left = left;
         }
         public string Inspect()
         {
-            return String.Format("({0}{1}{2})", Left.Inspect(), Operator, Right.Inspect());
+            if (Operator == "."){
+                return String.Format("({0}{1}{2})", Left.Inspect(), Operator, Right.Inspect());
+            }
+            return String.Format("({0} {1} {2})", Left.Inspect(), Operator, Right.Inspect());
         }
 
     }

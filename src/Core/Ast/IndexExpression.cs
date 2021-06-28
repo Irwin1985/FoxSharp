@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class IndexExpression : IExpression
+    public class IndexExpression : IExpression
     {
         public Token Token;
         public IExpression Left;

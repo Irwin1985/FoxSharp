@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class Identifier : IExpression
+    public class Identifier : IExpression
     {
         public Token Token;
         public string Value;
-        public Identifier() { }
-        public Identifier(Token token)
+        public Identifier() {}
+        public Identifier(Token token, string value)
         {
             this.Token = token;
+            this.Value = value;
         }
         public string Inspect()
         {

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class ExpressionStatement : IStatement
+    public class ExpressionStatement : IStatement
     {
-        public IStatement Expression;
+        public IExpression Expression;
         public Token Token;
         public ExpressionStatement() { }
         public ExpressionStatement(Token token)

@@ -14,30 +14,30 @@ namespace FoxSharp
         public int columnNumber = 0;
 
         public Token() { }
-        public Token(int lineNumber, int columnNumber)
-        {
+        public Token(int lineNumber, int columnNumber){
             this.lineNumber = lineNumber;
             this.columnNumber = columnNumber;
         }
-        public Token(TokenType type, string literal)
-        {
+        public Token(TokenType type, string literal){
             this.type = type;
             this.literal = literal;
         }
+        public Token(TokenType type, int lineNumber, int columnNumber){
+            this.type = type;
+            this.lineNumber = lineNumber;
+            this.columnNumber = columnNumber;
+        }
 
-        public Token(TokenType type, char literal)
-        {
+        public Token(TokenType type, char literal){
             this.type = type;
             this.literal = literal.ToString();
         }
 
-        public override string ToString()
-        {
+        public override string ToString(){
             return String.Format("type: {0}, literal: '{1}', line: {2}, col:{3}", type, literal, lineNumber, columnNumber);
         }
     }
-    public enum TokenType
-    {
+    public enum TokenType{
         ILLEGAL,
         EOF,
 
@@ -86,20 +86,13 @@ namespace FoxSharp
         NULL,
         AND,
         OR,
-        XOR,
         IF,
         ELSE,
         RETURN,
         BREAK,
         CONTINUE,
         WHILE,
-        FOR,
-        
-        // output
-        INFO,
-        ERROR,
-        WARNING,
-        PANIC,
+        FOR,       
 
         // special NET assembly keywords
         SMTP,

@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class BooleanLiteral : IExpression
+    public class BooleanLiteral : IExpression
     {
         public Token Token;
         public bool Value;
         public BooleanLiteral() { }
-        public BooleanLiteral(Token token)
+        public BooleanLiteral(Token token, bool value)
         {
             this.Token = token;
+            this.Value = value;
         }
         public string Inspect()
         {

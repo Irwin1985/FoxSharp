@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class FunctionLiteral : IExpression
+    public class FunctionLiteral : IExpression
     {
         public Token Token;
+        public string Name;
         public List<Identifier> Parameters;
         public BlockStatement Body;
         public FunctionLiteral() { }

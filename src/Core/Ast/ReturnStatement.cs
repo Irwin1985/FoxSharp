@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class ReturnStatement : IStatement
+    public class ReturnStatement : IStatement
     {
         public Token Token;
         public IExpression ReturnValue;
@@ -17,7 +17,7 @@ namespace FoxSharp
         }
         public string Inspect()
         {
-            return String.Format("return {0};", ReturnValue.Inspect());
+            return String.Format("return {0}", ReturnValue.Inspect());
         }
     }
 }

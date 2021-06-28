@@ -9,14 +9,13 @@ namespace FoxSharp
     public class FloatLiteral : IExpression
     {
         public Token Token;
-        public float Value;
+        public double Value;
         public FloatLiteral() { }
-        public FloatLiteral(Token token)
-        {
+        public FloatLiteral(Token token, double value){
             this.Token = token;
+            this.Value = value;
         }
-        public string Inspect()
-        {
+        public string Inspect(){
             return Value.ToString();
         }
     }

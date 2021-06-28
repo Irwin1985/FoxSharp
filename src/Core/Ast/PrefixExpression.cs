@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class PrefixExpression : IExpression
+    public class PrefixExpression : IExpression
     {
         public Token Token;
         public IExpression Right;
@@ -23,7 +23,7 @@ namespace FoxSharp
         }
         public string Inspect()
         {
-            return String.Format("{0}{1};", Operator, Right.Inspect());
+            return String.Format("({0}{1})", Operator, Right.Inspect());
         }
     }
 }

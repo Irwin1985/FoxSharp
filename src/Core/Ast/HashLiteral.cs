@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class HashLiteral : IExpression
+    public class HashLiteral : IExpression
     {
         public Token Token;
         public Dictionary<IExpression, IExpression> Pairs;
