@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    public class NullLiteral : IExpression
+    public class NullObj : IObject
     {
+        public ObjectType Type()
+        {
+            return ObjectType.NULL_OBJ;
+        }
         public string Inspect()
         {
             return "null";
-        }
-        public NodeType Type()
-        {
-            return NodeType.NULL;
         }
     }
 }

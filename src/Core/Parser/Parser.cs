@@ -22,8 +22,8 @@ namespace FoxSharp
 
         // precedence dictionary
         private Dictionary<TokenType, int> precedence = new Dictionary<TokenType, int>();
-        private Dictionary<TokenType, IPrefixParse> PrefixParseFn = new Dictionary<TokenType, IPrefixParse>();
-        private Dictionary<TokenType, IInfixParse> InfixParseFn = new Dictionary<TokenType, IInfixParse>();
+        private Dictionary<TokenType, IParsePrefix> PrefixParseFn = new Dictionary<TokenType, IParsePrefix>();
+        private Dictionary<TokenType, IParseInfix> InfixParseFn = new Dictionary<TokenType, IParseInfix>();
 
         public Token curToken;
         public Token peekToken;

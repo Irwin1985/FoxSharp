@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    interface IPrefixParse
+    interface IParsePrefix
     {
         IExpression ParsePrefixExpression(Parser p);
     }
-    interface IInfixParse
+    interface IParseInfix
     {
         IExpression ParseInfixExpression(Parser p, IExpression left);
     }  

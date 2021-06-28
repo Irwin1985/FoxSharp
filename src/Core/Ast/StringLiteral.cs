@@ -19,5 +19,9 @@ namespace FoxSharp
         {
             return String.Format("\"{0}\"", Value);
         }
+        public NodeType Type()
+        {
+            return NodeType.STRING;
+        }
     }
 }

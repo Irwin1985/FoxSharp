@@ -6,34 +6,27 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    public class ArrayLiteral : IExpression
+    public class ArrayObj : IObject
     {
-        public Token Token;
-        public List<IExpression> Elements;
-        public ArrayLiteral() { }
-        public ArrayLiteral(Token token)
+        public List<IObject> Elements;
+        public ObjectType Type()
         {
-            this.Token = token;
+            return ObjectType.ARRAY_OBJ;
         }
         public string Inspect()
         {
             var output = new StringBuilder();
             output.Append("[");
-            if (Elements.Count > 0)
-            {
+            if (Elements.Count > 0){
                 var items = new List<String>();
-                foreach(var element in Elements)
+                foreach (var item in Elements)
                 {
-                    items.Add(element.Inspect());
+                    items.Add(item.Inspect());
                 }
                 output.Append(String.Join(",", items));
             }
             output.Append("]");
             return output.ToString();
-        }
-        public NodeType Type()
-        {
-            return NodeType.ARRAY;
         }
     }
 }

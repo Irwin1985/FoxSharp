@@ -25,5 +25,9 @@ namespace FoxSharp
         {
             return String.Format("({0}{1})", Operator, Right.Inspect());
         }
+        public NodeType Type()
+        {
+            return NodeType.PREFIX;
+        }
     }
 }

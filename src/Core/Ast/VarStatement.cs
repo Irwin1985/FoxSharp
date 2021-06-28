@@ -20,7 +20,9 @@ namespace FoxSharp
         {
             return String.Format("var {0} = {1}", Name.Inspect(), Value.Inspect());
         }
-
-
+        public NodeType Type()
+        {
+            return NodeType.VAR;
+        }
     }
 }

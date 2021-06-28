@@ -27,5 +27,9 @@ namespace FoxSharp
             }
             return output.ToString();
         }
+        public NodeType Type()
+        {
+            return NodeType.IF;
+        }
     }
 }

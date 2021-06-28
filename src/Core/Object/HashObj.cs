@@ -6,24 +6,19 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    public class HashLiteral : IExpression
+    public class HashObj : IObject
     {
-        public Token Token;
-        public Dictionary<IExpression, IExpression> Pairs;
-        public HashLiteral() { }
-        public HashLiteral(Token token)
-        {
-            this.Token = token;
+        public Dictionary<string, IObject> Pairs;
+        public HashObj() { }
+        public ObjectType Type(){
+            return ObjectType.HASH_OBJ;
         }
-        public string Inspect()
-        {
+        public string Inspect(){
             var output = new StringBuilder();
             output.Append("{");
-            if (Pairs.Count > 0)
-            {
+            if (Pairs.Count > 0){
                 var pairs = new List<String>();
-                foreach(KeyValuePair<IExpression, IExpression> kvp in Pairs)
-                {
+                foreach (KeyValuePair<string, IObject> kvp in Pairs){
                     pairs.Add(String.Format("{0}:{1}", kvp.Key.Inspect(), kvp.Value.Inspect()));
                 }
                 output.Append(String.Join(",", pairs));
@@ -31,9 +26,6 @@ namespace FoxSharp
             output.Append("}");
             return output.ToString();
         }
-        public NodeType Type()
-        {
-            return NodeType.HASH;
-        }
     }
+    
 }

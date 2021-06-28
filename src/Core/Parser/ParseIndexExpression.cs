@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class ParseIndexExpression : IInfixParse
+    class ParseIndexExpression : IParseInfix
     {
         public IExpression ParseInfixExpression(Parser p, IExpression left)
         {

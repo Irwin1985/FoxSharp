@@ -20,5 +20,9 @@ namespace FoxSharp
         {
             return Value;
         }
+        public NodeType Type()
+        {
+            return NodeType.IDENT;
+        }
     }
 }

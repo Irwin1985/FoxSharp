@@ -18,5 +18,9 @@ namespace FoxSharp
         public string Inspect(){
             return Value.ToString();
         }
+        public NodeType Type()
+        {
+            return NodeType.FLOAT;
+        }
     }
 }

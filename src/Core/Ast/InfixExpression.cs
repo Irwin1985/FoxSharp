@@ -30,6 +30,10 @@ namespace FoxSharp
             }
             return String.Format("({0} {1} {2})", Left.Inspect(), Operator, Right.Inspect());
         }
+        public NodeType Type()
+        {
+            return NodeType.INFIX;
+        }
 
     }
 }

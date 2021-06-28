@@ -19,5 +19,9 @@ namespace FoxSharp
         {
             return Expression.Inspect();
         }
+        public NodeType Type()
+        {
+            return NodeType.EXPR_STMT;
+        }
     }
 }

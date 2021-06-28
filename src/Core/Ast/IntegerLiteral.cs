@@ -20,5 +20,9 @@ namespace FoxSharp
         {
             return Value.ToString();
         }
+        public NodeType Type()
+        {
+            return NodeType.INTEGER;
+        }
     }
 }

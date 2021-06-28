@@ -21,5 +21,9 @@ namespace FoxSharp
         {
             return String.Format("{0}[{1}]", Left.Inspect(), Index.Inspect());
         }
+        public NodeType Type()
+        {
+            return NodeType.INDEX;
+        }
     }
 }

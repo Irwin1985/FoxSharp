@@ -20,5 +20,9 @@ namespace FoxSharp
         {
             return Value ? "true" : "false";
         }
+        public NodeType Type()
+        {
+            return NodeType.BOOLEAN;
+        }
     }
 }

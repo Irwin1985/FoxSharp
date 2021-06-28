@@ -34,5 +34,9 @@ namespace FoxSharp
             output.Append(")");
             return output.ToString();
         }
+        public NodeType Type()
+        {
+            return NodeType.CALL;
+        }
     }
 }

@@ -64,6 +64,18 @@
     <Compile Include="Ast\VarStatement.cs" />
     <Compile Include="Ast\Program.cs" />
     <Compile Include="Core.cs" />
+    <Compile Include="Object\ArrayObj.cs" />
+    <Compile Include="Object\BooleanObj.cs" />
+    <Compile Include="Object\Environment.cs" />
+    <Compile Include="Object\ErrorObj.cs" />
+    <Compile Include="Object\FloatObj.cs" />
+    <Compile Include="Object\FunctionObj.cs" />
+    <Compile Include="Object\HashObj.cs" />
+    <Compile Include="Object\IntegerObj.cs" />
+    <Compile Include="Object\IObject.cs" />
+    <Compile Include="Object\NullObj.cs" />
+    <Compile Include="Object\ReturnObj.cs" />
+    <Compile Include="Object\StringObj.cs" />
     <Compile Include="Parser\ParseCallExpression.cs" />
     <Compile Include="Parser\ParseGroupedExpression.cs" />
     <Compile Include="Parser\ParseIndexExpression.cs" />
@@ -76,6 +88,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scanner\StringReader.cs" />
     <Compile Include="Token\Token.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Evaluator\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

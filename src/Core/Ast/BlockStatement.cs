@@ -25,5 +25,9 @@ namespace FoxSharp
             output.Append("\n}\n");
             return output.ToString();
         }
+        public NodeType Type()
+        {
+            return NodeType.BLOCK_STMT;
+        }
     }
 }
