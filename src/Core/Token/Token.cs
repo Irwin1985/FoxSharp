@@ -42,8 +42,7 @@ namespace FoxSharp
         EOF,
 
         IDENT,
-        INT,
-        FLOAT,
+        NUMBER,
         STRING,
 
         ASSIGN,

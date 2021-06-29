@@ -9,9 +9,25 @@ namespace FoxSharp
     public class SmtpLiteral : IExpression {
         public Token Token;
         public Dictionary<IExpression, IExpression> Properties;
+        public string[] prop = {
+            "provider", 
+            "port",
+            "user",
+            "pass",
+            "from",
+            "to",
+            "files",
+            "subject",
+            "body",
+            "html",
+        };
         public SmtpLiteral() { }
         public SmtpLiteral(Token token){
             this.Token = token;
+        }
+        public bool HasProperty(string key)
+        {
+            return prop.Contains(key);
         }
         public string Inspect(){
             var output = new StringBuilder();

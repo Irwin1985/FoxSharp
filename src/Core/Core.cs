@@ -8,7 +8,7 @@ namespace FoxSharp
 {
     public class Core
     {
-        public void Run(string source)
+        public string Run(string source)
         {
             try{
                 FoxSharp.Scanner scanner = new FoxSharp.Scanner();
@@ -17,25 +17,20 @@ namespace FoxSharp
                 var program = parser.ParseProgram();
                 var errors = parser.GetErrors();
                 if (errors.Count > 0){
-                    foreach (var msg in errors){
-                        Console.WriteLine("Error: " + msg);
-                    }
+                    var strError = String.Join("\n", errors);
+                    System.Windows.Forms.MessageBox.Show(strError);
+                    return strError;
                 }
-                System.Windows.Forms.MessageBox.Show(program.Inspect(), "Respuesta del Parser");
+                FoxSharp.Environment globalEnv = new FoxSharp.Environment();
+                var evaluated = Evaluator.Eval(program, globalEnv);
+                if (evaluated != null){
+                    return evaluated.Inspect();
+                }
+                return "unknown error";
             }catch (Exception e){
                 System.Windows.Forms.MessageBox.Show(e.Message, "FoxSharp Error");
+                return e.Message;
             }
-            //System.Windows.Forms.MessageBox.Show(source, "FoxSharp");
-        }
-        public void sendEmail()
-        {
-            var smtpClient = new System.Net.Mail.SmtpClient("smtp.gmail.com")
-            {
-                Port = 587,
-                Credentials = new System.Net.NetworkCredential("rodriguez.irwin@gmail.com", "woxihuanchange1985"),
-                EnableSsl = true,
-            };
-            smtpClient.Send("rodriguez.irwin@gmail.com", "getiang2012@gmail.com", "el cocoyer", "hola cocoyerito! juega conmigo no seas malito!");
         }
     }
 }

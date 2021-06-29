@@ -11,20 +11,24 @@ namespace FoxSharp
         private Dictionary<string, IObject> Store = new Dictionary<string, IObject>();
         private Environment Outer;
         public Environment() {}
-        public Environment(Environment outer)
-        {
+        public Environment(Environment outer){
             this.Outer = outer;
         }
-        public IObject Set(string name, IObject value)
-        {
+        public IObject Set(string name, IObject value){
+            if (Store.ContainsKey(name)){
+                Store[name] = value;
+                return value;
+            }
             Store.Add(name, value);
             return value;
         }
         public IObject Get(string name)
         {
-            if (Store.ContainsKey(name))
-            {
+            if (Store.ContainsKey(name)){
                 return Store[name];
+            }
+            if (Outer != null){
+                return Outer.Get(name);
             }
             return null;
         }

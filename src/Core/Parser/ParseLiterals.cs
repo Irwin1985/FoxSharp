@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    class ParseLiteral : IParsePrefix{
+    class ParseLiterals : IParsePrefix{
         Parser p;
         public IExpression ParsePrefixExpression(Parser p)
         {
             this.p = p;
             switch (p.curToken.type){
-                case TokenType.INT:
-                    return ParseIntegerLiteral();
-                case TokenType.FLOAT:
-                    return ParseFloatLiteral();
+                case TokenType.NUMBER:
+                    return ParseNumberLiteral();
                 case TokenType.STRING:
                     return ParseStringLiteral();
                 case TokenType.NULL:
@@ -39,16 +37,9 @@ namespace FoxSharp
                     return null;
             }
         }
-        IExpression ParseIntegerLiteral(){
-            var lit = new IntegerLiteral(p.curToken, Convert.ToInt32(p.curToken.literal));
-            p.Expect(TokenType.INT);
-
-            return lit;
-        }
-        IExpression ParseFloatLiteral()
-        {
-            var lit = new FloatLiteral(p.curToken, double.Parse(p.curToken.literal.Replace('.', ',')));
-            p.Expect(TokenType.FLOAT);
+        IExpression ParseNumberLiteral(){
+            var lit = new NumberLiteral(p.curToken, double.Parse(p.curToken.literal.Replace('.', ',')));
+            p.Expect(TokenType.NUMBER);
 
             return lit;
         }
@@ -80,7 +71,7 @@ namespace FoxSharp
             array.Elements = new List<IExpression>();
             p.NextToken(); // advance '['
             if (!p.CurTokenIs(TokenType.RBRACKET)){
-                array.Elements = p.ParseExpressionList();
+                array.Elements = p.ParseExpressionList(TokenType.RBRACKET);
             }
             p.Expect(TokenType.RBRACKET);
 
@@ -100,14 +91,16 @@ namespace FoxSharp
 
                 while (p.CurTokenIs(TokenType.COMMA)){
                     p.NextToken(); // skip ','
-                    key = p.ParseExpression(p.LOWEST);
-                    p.Expect(TokenType.COLON);
-                    value = p.ParseExpression(p.LOWEST);
-                    hash.Pairs.Add(key, value);
+                    if (!p.CurTokenIs(TokenType.RBRACE)){
+                        key = p.ParseExpression(p.LOWEST);
+                        p.Expect(TokenType.COLON);
+                        value = p.ParseExpression(p.LOWEST);
+                        hash.Pairs.Add(key, value);
+                    }
                 }
             }
-
             p.Expect(TokenType.RBRACE);
+
             return hash;
         }
         IExpression ParseFunctionLiteral(){
@@ -118,10 +111,11 @@ namespace FoxSharp
 
             if (!p.CurTokenIs(TokenType.RPAREN)){
                 fun.Parameters.Add(p.ParseIdentifier());
-                while (p.CurTokenIs(TokenType.COMMA))
-                {
+                while (p.CurTokenIs(TokenType.COMMA)){
                     p.NextToken(); // skip ','
-                    fun.Parameters.Add(p.ParseIdentifier());
+                    if (!p.CurTokenIs(TokenType.RPAREN)){
+                        fun.Parameters.Add(p.ParseIdentifier());
+                    }
                 }
             }
             p.Expect(TokenType.RPAREN);

@@ -7,14 +7,43 @@ namespace TestFoxSharp
         static void Main(string[] args)
         {
             //TestScanner();
-            TestParser();
+            //TestParser();
+            TestEvaluator();
+        }
+        public static void TestEvaluator()
+        {
+            try
+            {
+                FoxSharp.Scanner scanner = new FoxSharp.Scanner();
+                scanner.ReadString("true or irwin");
+                //scanner.ReadFile(@"c:\a1\test.txt");
+                FoxSharp.Parser parser = new FoxSharp.Parser(scanner);
+                var program = parser.ParseProgram();
+                var errors = parser.GetErrors();
+                if (errors.Count > 0){
+                    foreach (var msg in errors){
+                        Console.WriteLine("Error: " + msg);
+                    }
+                }
+                FoxSharp.Environment globalEnv = new FoxSharp.Environment();                
+                var evaluated = Evaluator.Eval(program, globalEnv);
+                if (evaluated != null){
+                    Console.WriteLine(evaluated.Inspect());
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
         }
         public static void TestScanner()
         {
             try
             {
                 FoxSharp.Scanner scanner = new FoxSharp.Scanner();
-                scanner.ReadFile(@"c:\a1\test.txt");
+                scanner.ReadString("!true");
+                //scanner.ReadFile(@"c:\a1\test.txt");
                 var tok = scanner.NextToken();
                 while (tok.type != TokenType.EOF)
                 {

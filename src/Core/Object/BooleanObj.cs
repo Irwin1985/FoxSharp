@@ -16,7 +16,7 @@ namespace FoxSharp
         }
         public ObjectType Type()
         {
-            return ObjectType.BOOLEAN_OBJ;
+            return ObjectType.BOOLEAN;
         }
         public string Inspect()
         {

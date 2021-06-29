@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoxSharp", "FoxSharp.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFoxSharp", "..\TestFoxSharp\TestFoxSharp.csproj", "{C7088F3A-EC4E-4FBC-A7FE-6896C58E5FB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoxSharpRepl", "..\FoxSharpRepl\FoxSharpRepl.csproj", "{D0E438FE-22FC-415A-B2B8-E6873D2674DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C7088F3A-EC4E-4FBC-A7FE-6896C58E5FB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7088F3A-EC4E-4FBC-A7FE-6896C58E5FB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7088F3A-EC4E-4FBC-A7FE-6896C58E5FB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0E438FE-22FC-415A-B2B8-E6873D2674DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0E438FE-22FC-415A-B2B8-E6873D2674DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0E438FE-22FC-415A-B2B8-E6873D2674DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0E438FE-22FC-415A-B2B8-E6873D2674DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

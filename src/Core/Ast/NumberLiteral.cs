@@ -6,21 +6,23 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    public class FloatLiteral : IExpression
+    public class NumberLiteral : IExpression
     {
         public Token Token;
         public double Value;
-        public FloatLiteral() { }
-        public FloatLiteral(Token token, double value){
+        public NumberLiteral() { }
+        public NumberLiteral(Token token, double value)
+        {
             this.Token = token;
             this.Value = value;
-        }
-        public string Inspect(){
-            return Value.ToString();
-        }
+        }        
         public NodeType Type()
         {
-            return NodeType.FLOAT;
+            return NodeType.NUMBER;
+        }
+        public string Inspect()
+        {
+            return Value.ToString();
         }
     }
 }

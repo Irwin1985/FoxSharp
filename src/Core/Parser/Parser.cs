@@ -17,8 +17,9 @@ namespace FoxSharp
         public int TERM = 5;         // a +, - b
         public int FACTOR = 6;       // a *, / b
         public int PREFIX = 7;       // -a, !b
-        public int CALL = 8;         // foo()
-        public int INDEX = 9;        // bar[1]
+        public int POWER = 8;        // a^b
+        public int CALL = 9;         // foo()
+        public int INDEX = 10;       // bar[1]
 
         // precedence dictionary
         private Dictionary<TokenType, int> precedence = new Dictionary<TokenType, int>();
@@ -35,7 +36,7 @@ namespace FoxSharp
         // infixParseFn
         private ParseInfix infixParseFn = new ParseInfix();
         // parseLiteralFn
-        private ParseLiteral parseLiteralFn = new ParseLiteral();
+        private ParseLiterals parseLiteralFn = new ParseLiterals();
 
         private bool panicMode = false;
         public Parser(Scanner sc)
@@ -58,6 +59,8 @@ namespace FoxSharp
             // factor
             precedence.Add(TokenType.MUL, FACTOR);
             precedence.Add(TokenType.DIV, FACTOR);
+            // power
+            precedence.Add(TokenType.POW, POWER);
             // call
             precedence.Add(TokenType.LPAREN, CALL);
             precedence.Add(TokenType.DOT, CALL);
@@ -66,8 +69,7 @@ namespace FoxSharp
             precedence.Add(TokenType.LBRACKET, INDEX);
 
             // Register prefix tokens with it semantic code
-            PrefixParseFn.Add(TokenType.INT, parseLiteralFn);
-            PrefixParseFn.Add(TokenType.FLOAT, parseLiteralFn);
+            PrefixParseFn.Add(TokenType.NUMBER, parseLiteralFn);
             PrefixParseFn.Add(TokenType.IDENT, parseLiteralFn);
             PrefixParseFn.Add(TokenType.STRING, parseLiteralFn);
             PrefixParseFn.Add(TokenType.NULL, parseLiteralFn);
@@ -109,7 +111,7 @@ namespace FoxSharp
         }
         public int CurPrecedence(){
             switch (curToken.type){
-                case TokenType.INT:
+                case TokenType.NUMBER:
                 case TokenType.STRING:
                 case TokenType.NULL:
                     errors.Add("Syntax Error: invalid infix operand: " + curToken.literal);
@@ -248,14 +250,15 @@ namespace FoxSharp
 
             return left;
         }
-        public List<IExpression> ParseExpressionList(){
+        public List<IExpression> ParseExpressionList(TokenType closingToken){
             var exp = new List<IExpression>();
             exp.Add(ParseExpression(LOWEST));
 
-            while (CurTokenIs(TokenType.COMMA))
-            {
+            while (CurTokenIs(TokenType.COMMA)){
                 NextToken(); // skip ','
-                exp.Add(ParseExpression(LOWEST));
+                if (!CurTokenIs(closingToken)){
+                    exp.Add(ParseExpression(LOWEST));
+                }
             }
             return exp;
         }

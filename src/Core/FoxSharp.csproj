@@ -47,16 +47,15 @@
     <Compile Include="Ast\BooleanLiteral.cs" />
     <Compile Include="Ast\CallExpression.cs" />
     <Compile Include="Ast\ExpressionStatement.cs" />
-    <Compile Include="Ast\FloatLiteral.cs" />
     <Compile Include="Ast\FunctionLiteral.cs" />
     <Compile Include="Ast\HashLiteral.cs" />
     <Compile Include="Ast\Identifier.cs" />
     <Compile Include="Ast\IfExpression.cs" />
     <Compile Include="Ast\IndexExpression.cs" />
     <Compile Include="Ast\InfixExpression.cs" />
-    <Compile Include="Ast\IntegerLiteral.cs" />
     <Compile Include="Ast\Interfaces.cs" />
     <Compile Include="Ast\NullLiteral.cs" />
+    <Compile Include="Ast\NumberLiteral.cs" />
     <Compile Include="Ast\PrefixExpression.cs" />
     <Compile Include="Ast\ReturnStatement.cs" />
     <Compile Include="Ast\SmtpLiteral.cs" />
@@ -64,23 +63,34 @@
     <Compile Include="Ast\VarStatement.cs" />
     <Compile Include="Ast\Program.cs" />
     <Compile Include="Core.cs" />
+    <Compile Include="Evaluator\BuiltinError.cs" />
+    <Compile Include="Evaluator\BuiltinFormat.cs" />
+    <Compile Include="Evaluator\BuiltinInfo.cs" />
+    <Compile Include="Evaluator\BuiltinLen.cs" />
+    <Compile Include="Evaluator\BuiltinLoad.cs" />
+    <Compile Include="Evaluator\BuiltinQuestion.cs" />
+    <Compile Include="Evaluator\Builtins.cs" />
+    <Compile Include="Evaluator\BuiltinSend.cs" />
+    <Compile Include="Evaluator\BuiltinType.cs" />
+    <Compile Include="Evaluator\BuiltinWarning.cs" />
+    <Compile Include="Evaluator\Evaluator.cs" />
     <Compile Include="Object\ArrayObj.cs" />
     <Compile Include="Object\BooleanObj.cs" />
     <Compile Include="Object\Environment.cs" />
     <Compile Include="Object\ErrorObj.cs" />
-    <Compile Include="Object\FloatObj.cs" />
     <Compile Include="Object\FunctionObj.cs" />
     <Compile Include="Object\HashObj.cs" />
-    <Compile Include="Object\IntegerObj.cs" />
+    <Compile Include="Object\NumberObj.cs" />
     <Compile Include="Object\IObject.cs" />
     <Compile Include="Object\NullObj.cs" />
     <Compile Include="Object\ReturnObj.cs" />
+    <Compile Include="Object\SmtpObj.cs" />
     <Compile Include="Object\StringObj.cs" />
     <Compile Include="Parser\ParseCallExpression.cs" />
     <Compile Include="Parser\ParseGroupedExpression.cs" />
     <Compile Include="Parser\ParseIndexExpression.cs" />
     <Compile Include="Parser\ParseInfix.cs" />
-    <Compile Include="Parser\ParseLiteral.cs" />
+    <Compile Include="Parser\ParseLiterals.cs" />
     <Compile Include="Parser\ParsePrefix.cs" />
     <Compile Include="Parser\ParserInterfaces.cs" />
     <Compile Include="Parser\Parser.cs" />
@@ -89,8 +99,6 @@
     <Compile Include="Scanner\StringReader.cs" />
     <Compile Include="Token\Token.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Evaluator\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -16,7 +16,7 @@ namespace FoxSharp
         }
         public ObjectType Type()
         {
-            return ObjectType.RETURN_OBJ;
+            return ObjectType.RETURN;
         }
         public string Inspect()
         {

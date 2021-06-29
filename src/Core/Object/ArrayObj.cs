@@ -11,7 +11,7 @@ namespace FoxSharp
         public List<IObject> Elements;
         public ObjectType Type()
         {
-            return ObjectType.ARRAY_OBJ;
+            return ObjectType.ARRAY;
         }
         public string Inspect()
         {

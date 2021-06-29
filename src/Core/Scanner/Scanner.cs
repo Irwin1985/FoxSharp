@@ -299,11 +299,7 @@ namespace FoxSharp
                 lexeme += ch;
                 NextChar();
             }            
-            if (lexeme.Contains('.')){
-                tok.type = TokenType.FLOAT;
-            } else{
-                tok.type = TokenType.INT;
-            }
+            tok.type = TokenType.NUMBER;
             tok.literal = lexeme;
 
             return tok;

@@ -11,7 +11,7 @@ namespace FoxSharp
         public Dictionary<string, IObject> Pairs;
         public HashObj() { }
         public ObjectType Type(){
-            return ObjectType.HASH_OBJ;
+            return ObjectType.HASH;
         }
         public string Inspect(){
             var output = new StringBuilder();
@@ -19,7 +19,7 @@ namespace FoxSharp
             if (Pairs.Count > 0){
                 var pairs = new List<String>();
                 foreach (KeyValuePair<string, IObject> kvp in Pairs){
-                    pairs.Add(String.Format("{0}:{1}", kvp.Key.Inspect(), kvp.Value.Inspect()));
+                    pairs.Add(String.Format("{0}:{1}", kvp.Key, kvp.Value.Inspect()));
                 }
                 output.Append(String.Join(",", pairs));
             }

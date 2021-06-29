@@ -15,7 +15,7 @@ namespace FoxSharp
         public FunctionObj() { }
         public ObjectType Type()
         {
-            return ObjectType.FUNCTION_OBJ;
+            return ObjectType.FUNCTION;
         }
         public string Inspect()
         {

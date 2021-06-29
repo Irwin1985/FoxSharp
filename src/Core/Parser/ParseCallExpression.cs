@@ -15,7 +15,7 @@ namespace FoxSharp
             p.NextToken(); // advance '('
 
             if (!p.CurTokenIs(TokenType.RPAREN)){
-                call.Arguments = p.ParseExpressionList();
+                call.Arguments = p.ParseExpressionList(TokenType.RPAREN);
             }
             p.Expect(TokenType.RPAREN);
 

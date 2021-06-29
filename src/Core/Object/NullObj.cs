@@ -10,7 +10,7 @@ namespace FoxSharp
     {
         public ObjectType Type()
         {
-            return ObjectType.NULL_OBJ;
+            return ObjectType.NULL;
         }
         public string Inspect()
         {

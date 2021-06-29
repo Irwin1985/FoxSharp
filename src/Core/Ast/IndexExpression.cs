@@ -11,6 +11,7 @@ namespace FoxSharp
         public Token Token;
         public IExpression Left;
         public IExpression Index;
+        public IExpression Top; // nCharacters to fetch from substring. [Index:Top]
         public IndexExpression() { }
         public IndexExpression(Token token, IExpression left)
         {
@@ -19,7 +20,11 @@ namespace FoxSharp
         }
         public string Inspect()
         {
-            return String.Format("{0}[{1}]", Left.Inspect(), Index.Inspect());
+            if (Top != null){
+                return String.Format("{0}[{1}:{2}]", Left.Inspect(), Index.Inspect(), Top.Inspect());
+            } else{
+                return String.Format("{0}[{1}]", Left.Inspect(), Index.Inspect());
+            }
         }
         public NodeType Type()
         {

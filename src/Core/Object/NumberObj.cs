@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace FoxSharp
 {
-    public class IntegerObj : IObject
+    public class NumberObj : IObject
     {
-        int Value;
-        public IntegerObj(){}
-        public IntegerObj(int value)
+        public double Value;
+        public NumberObj(){}
+        public NumberObj(double value)
         {
             this.Value = value;
         }
         public ObjectType Type()
         {
-            return ObjectType.INTEGER_OBJ;
+            return ObjectType.NUMBER;
         }
         public string Inspect()
         {
-            return Value.ToString();
+            return Value.ToString().Replace(',','.');
         }
     }
 }
