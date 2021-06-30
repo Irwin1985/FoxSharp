@@ -14,8 +14,8 @@ do FoxSharpREPL.app
 
 ### Using FoxSharp inside a real Project
 . Add **foxsharp.prg** to your project files.
-. Bring **foxsharp.prg** to scope with <code>SET PROCEDURE TO foxsharp.prg ADDITIVE<code>
-. Hit the command DO foxSharp.prg
+. Bring **foxsharp.prg** to scope with ```SET PROCEDURE TO foxsharp.prg ADDITIVE```
+. Hit the command ```DO foxSharp.prg```
 
 ### The very basics of FoxSharp
 ```Javascript
