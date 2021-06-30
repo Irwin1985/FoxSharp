@@ -15,6 +15,7 @@ namespace FoxSharp
             Pool.Add("len", new BuiltinLen());
             Pool.Add("send", new BuiltinSend());
             Pool.Add("load", new BuiltinLoad());
+            Pool.Add("file", new BuiltinFile());
             Pool.Add("format", new BuiltinFormat());
             Pool.Add("left", new BuiltinLeft());
             Pool.Add("right", new BuiltinRight());
@@ -25,6 +26,7 @@ namespace FoxSharp
             Pool.Add("warning", new BuiltinWarning());
             Pool.Add("error", new BuiltinError());
             Pool.Add("question", new BuiltinQuestion());
+            Pool.Add("download", new BuiltinDownload());
         }
     }
     public interface IBuiltin : IObject

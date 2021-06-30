@@ -38,7 +38,7 @@ namespace FoxSharp
         // parseLiteralFn
         private ParseLiterals parseLiteralFn = new ParseLiterals();
 
-        private bool panicMode = false;
+        public bool panicMode = false;
         public Parser(Scanner sc)
         {
             this.sc = sc;
@@ -184,6 +184,8 @@ namespace FoxSharp
                     return ParseVarStatement();
                 case TokenType.RETURN:
                     return ParseReturnStatement();
+                case TokenType.WHILE:
+                    return ParseWhileStatement();
                 default:
                     if (IsPascalBinding()){
                         return ParsePascalBinding();
@@ -229,6 +231,18 @@ namespace FoxSharp
             var stmt = new ReturnStatement(curToken);
             NextToken(); // advance 'return'
             stmt.ReturnValue = ParseExpression(LOWEST);
+
+            return stmt;
+        }
+        IStatement ParseWhileStatement(){
+            var stmt = new WhileStatement(curToken);
+            NextToken(); // skip 'while'
+            
+            Expect(TokenType.LPAREN);
+            stmt.Condition = ParseExpression(LOWEST);
+            Expect(TokenType.RPAREN);
+
+            stmt.Body = ParseBlockStatement();
 
             return stmt;
         }

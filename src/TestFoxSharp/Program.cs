@@ -6,9 +6,9 @@ namespace TestFoxSharp
     {
         static void Main(string[] args)
         {
-            //TestScanner();
+            TestScanner();
             //TestParser();
-            TestEvaluator();
+            //TestEvaluator();
         }
         public static void TestEvaluator()
         {
@@ -42,7 +42,7 @@ namespace TestFoxSharp
             try
             {
                 FoxSharp.Scanner scanner = new FoxSharp.Scanner();
-                scanner.ReadString("!true");
+                scanner.ReadString("saludar := fn(data.name)");
                 //scanner.ReadFile(@"c:\a1\test.txt");
                 var tok = scanner.NextToken();
                 while (tok.type != TokenType.EOF)

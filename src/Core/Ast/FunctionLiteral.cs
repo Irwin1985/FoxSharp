@@ -12,6 +12,7 @@ namespace FoxSharp
         public string Name;
         public List<Identifier> Parameters;
         public BlockStatement Body;
+        public bool LastParamArray = false;
         public FunctionLiteral() { }
         public FunctionLiteral(Token token)
         {

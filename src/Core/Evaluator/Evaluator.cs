@@ -12,8 +12,6 @@ namespace FoxSharp
         public static IObject TRUE = new BooleanObj(true);
         public static IObject FALSE = new BooleanObj(false);
         private static Builtins Builtin = new Builtins();
-
-
         public static IObject Eval(INode node, Environment env)
         {
             switch (node.Type())
@@ -28,6 +26,8 @@ namespace FoxSharp
                     return EvalVarStmt((VarStatement)node, env);
                 case NodeType.RETURN:
                     return EvalReturnStmt((ReturnStatement)node, env);
+                case NodeType.WHILE:
+                    return EvalWhileStmt((WhileStatement)node, env);
                 case NodeType.IF:
                     return EvalIfExpression((IfExpression)node, env);
                 case NodeType.FUNCTION:
@@ -103,6 +103,27 @@ namespace FoxSharp
 
             return new ReturnObj(value);
         }
+        private static IObject EvalWhileStmt(WhileStatement node, Environment env)
+        {
+            while (true){
+                var condition = Eval(node.Condition, env);
+                if (IsError(condition)){
+                    return condition;
+                }
+                if (condition.Type() != ObjectType.BOOLEAN){
+                    return NewError("while condition must be BOOLEAN.");
+                }
+                if (((BooleanObj)condition).Value){
+                    var resultObj = Eval(node.Body, env);
+                    if (IsError(resultObj)){
+                        return resultObj;
+                    }
+                }else{
+                    break;
+                }
+            }
+            return NULL;
+        }
         private static IObject EvalIdentifier(Identifier node, Environment env){
             var name = node.Value;
             var result = env.Get(name);
@@ -137,6 +158,7 @@ namespace FoxSharp
             funObj.Parameters = node.Parameters;
             funObj.Env = env;
             funObj.Body = node.Body;
+            funObj.LastParamArray = node.LastParamArray;
 
             return funObj;
         }
@@ -315,6 +337,16 @@ namespace FoxSharp
             {
                 case ObjectType.FUNCTION:
                     var fn = (FunctionObj)function;
+                    // case 1: fun doesn't expect parameters and some has passed.
+                    if (fn.Parameters.Count == 0 && args.Count > 0){
+                        return NewError("unexpected argument.");
+                    } else{
+                        if (fn.LastParamArray && args.Count == 0){
+                            return NewError("expected argument.");
+                        } else if (!fn.LastParamArray && args.Count > fn.Parameters.Count){
+                            return NewError("must specify additional parameters");
+                        }
+                    }
                     var extendedEnv = ExtendEnvironment(fn, args);
                     var evaluated = Eval(fn.Body, extendedEnv);
                     if (evaluated.Type() == ObjectType.RETURN){
@@ -331,9 +363,26 @@ namespace FoxSharp
         private static Environment ExtendEnvironment(FunctionObj fn, List<IObject> args){
             var newEnv = new Environment(fn.Env);
             var idx = 0;
+            var lastParamIsArray = fn.LastParamArray;
+            var lastIndex = fn.Parameters.Count;
             foreach (var par in fn.Parameters)
             {
-                newEnv.Set(par.Value, args[idx]);
+                if (idx+1 == fn.Parameters.Count && lastParamIsArray){
+                    // make an array and pass it as last argument
+                    ArrayObj arrObj = new ArrayObj();
+                    arrObj.Elements = new List<IObject>();
+                    // push the rest of arguments into array
+                    for (var j = idx; j < args.Count; j++){
+                        arrObj.Elements.Add(args[j]);
+                    }
+                    newEnv.Set(par.Value, arrObj);
+                }else {                 
+                    if (idx < args.Count){
+                        newEnv.Set(par.Value, args[idx]);
+                    }else{
+                        newEnv.Set(par.Value, NULL);
+                    }
+                }
                 idx += 1;
             }
             return newEnv;

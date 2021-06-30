@@ -32,5 +32,6 @@ namespace FoxSharp
         SMTP,
         STRING,
         VAR,
+        WHILE,
     }
 }

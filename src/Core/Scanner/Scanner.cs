@@ -242,6 +242,17 @@ namespace FoxSharp
                     tok.literal = ",";
                     break;
                 case '.':
+                    if (stringReader.Peek() == '.'){
+                        ReadChar(); // skip first '.'
+                        if (stringReader.Peek() == '.'){
+                            ReadChar(); // skip second '.'
+                            tok.type = TokenType.DOT_PARAM;
+                            tok.literal = "...";
+                            break;
+                        }else{
+                            throw new Exception("Unknown character sequence: '..'");
+                        }
+                    }
                     tok.type = TokenType.DOT;
                     tok.literal = ".";
                     break;

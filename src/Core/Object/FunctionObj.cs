@@ -11,6 +11,7 @@ namespace FoxSharp
         public List<Identifier> Parameters;
         public BlockStatement Body;
         public Environment Env;
+        public bool LastParamArray = false;
 
         public FunctionObj() { }
         public ObjectType Type()

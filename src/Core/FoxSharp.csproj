@@ -64,9 +64,12 @@
     <Compile Include="Ast\StringLiteral.cs" />
     <Compile Include="Ast\VarStatement.cs" />
     <Compile Include="Ast\Program.cs" />
+    <Compile Include="Ast\WhileStatement.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Evaluator\BuiltinAlltrim.cs" />
+    <Compile Include="Evaluator\BuiltinDownload.cs" />
     <Compile Include="Evaluator\BuiltinError.cs" />
+    <Compile Include="Evaluator\BuiltinFile.cs" />
     <Compile Include="Evaluator\BuiltinFormat.cs" />
     <Compile Include="Evaluator\BuiltinInfo.cs" />
     <Compile Include="Evaluator\BuiltinInputBox.cs" />

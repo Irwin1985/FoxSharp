@@ -67,6 +67,7 @@ namespace FoxSharp
         COMMA,
         SEMICOLON,
         DOT,
+        DOT_PARAM,
         COLON,
         BINDING,
 

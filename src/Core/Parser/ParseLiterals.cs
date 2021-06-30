@@ -111,10 +111,23 @@ namespace FoxSharp
 
             if (!p.CurTokenIs(TokenType.RPAREN)){
                 fun.Parameters.Add(p.ParseIdentifier());
+                if (p.CurTokenIs(TokenType.DOT_PARAM)){
+                    p.NextToken(); // skip '...'
+                    fun.LastParamArray = true;
+                }
                 while (p.CurTokenIs(TokenType.COMMA)){
+                    if (fun.LastParamArray){
+                        p.errors.Add("variadic parameters must be the last parameter");
+                        p.panicMode = true;
+                        return null;
+                    }
                     p.NextToken(); // skip ','
                     if (!p.CurTokenIs(TokenType.RPAREN)){
                         fun.Parameters.Add(p.ParseIdentifier());
+                        if (p.CurTokenIs(TokenType.DOT_PARAM)){
+                            p.NextToken(); // skip '...'
+                            fun.LastParamArray = true;
+                        }
                     }
                 }
             }
