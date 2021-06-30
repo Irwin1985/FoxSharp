@@ -24,7 +24,7 @@ FoxSharp will create a Screen Property Called **Foxsharp** which you can execute
 * Create FoxSharp class
 do FoxSharp.prg
 if _screen.foxsharp.hasErrors()
-	_screen.foxsharp.printErrors()
+   _screen.foxsharp.printErrors()
 endif
 ```
 Put the code above in any place of your main PRG file. If there's no errors then the FoxSharp property will be created in you main Screen thus you can run code anywhere in your program.
@@ -37,10 +37,10 @@ add(10, 15);
 endtext
 lcResult = _screen.FoxSharp.runCode(lcScript)
 if _screen.foxsharp.hasErrors()
-  _screen.foxsharp.printErrors()
+   _screen.foxsharp.printErrors()
 endif
 if type('lcResult') == 'C'
-  messagebox("Output from FoxSharp: " + lcResult)
+   messagebox("Output from FoxSharp: " + lcResult)
 endif
 ```
 
