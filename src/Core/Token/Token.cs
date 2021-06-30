@@ -92,7 +92,8 @@ namespace FoxSharp
         BREAK,
         CONTINUE,
         WHILE,
-        FOR,       
+        FOR,  
+        IN,
 
         // special NET assembly keywords
         SMTP,

@@ -184,6 +184,8 @@ namespace FoxSharp
                     return ParseVarStatement();
                 case TokenType.RETURN:
                     return ParseReturnStatement();
+                case TokenType.FOR:
+                    return ParseForStatement();
                 case TokenType.WHILE:
                     return ParseWhileStatement();
                 default:
@@ -231,6 +233,22 @@ namespace FoxSharp
             var stmt = new ReturnStatement(curToken);
             NextToken(); // advance 'return'
             stmt.ReturnValue = ParseExpression(LOWEST);
+
+            return stmt;
+        }
+        IStatement ParseForStatement(){
+            var stmt = new ForStatement(curToken);
+            NextToken(); // skip 'for'
+            Expect(TokenType.LPAREN);
+            if (PeekTokenIs(TokenType.COMMA)){
+                stmt.IndexOrKey = ParseIdentifier();
+                Expect(TokenType.COMMA);
+            }
+            stmt.Value = ParseIdentifier();
+            Expect(TokenType.IN);
+            stmt.Source = ParseExpression(LOWEST);
+            Expect(TokenType.RPAREN);
+            stmt.Body = ParseBlockStatement();
 
             return stmt;
         }
@@ -288,7 +306,10 @@ namespace FoxSharp
         {
             return curToken.type == type;
         }
-
+        public bool PeekTokenIs(TokenType type)
+        {
+            return peekToken.type == type;
+        }
         public Identifier ParseIdentifier()
         {
             var indent = new Identifier(curToken, curToken.literal);

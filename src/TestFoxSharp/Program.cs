@@ -6,8 +6,8 @@ namespace TestFoxSharp
     {
         static void Main(string[] args)
         {
-            TestScanner();
-            //TestParser();
+            //TestScanner();
+            TestParser();
             //TestEvaluator();
         }
         public static void TestEvaluator()
@@ -63,7 +63,7 @@ namespace TestFoxSharp
             try
             {
                 FoxSharp.Scanner scanner = new FoxSharp.Scanner();
-                scanner.ReadFile(@"c:\a1\test.txt");
+                scanner.ReadFile(@"c:\a1\test4.txt");
                 //scanner.ReadString("panic(err);");
                 FoxSharp.Parser parser = new FoxSharp.Parser(scanner);
                 var program = parser.ParseProgram();

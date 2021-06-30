@@ -49,6 +49,7 @@
     <Compile Include="Ast\BooleanLiteral.cs" />
     <Compile Include="Ast\CallExpression.cs" />
     <Compile Include="Ast\ExpressionStatement.cs" />
+    <Compile Include="Ast\ForStatement.cs" />
     <Compile Include="Ast\FunctionLiteral.cs" />
     <Compile Include="Ast\HashLiteral.cs" />
     <Compile Include="Ast\Identifier.cs" />

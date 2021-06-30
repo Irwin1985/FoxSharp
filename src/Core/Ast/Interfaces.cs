@@ -18,6 +18,7 @@ namespace FoxSharp
         BOOLEAN,
         CALL,
         EXPR_STMT,
+        FOR,
         FUNCTION,
         HASH,
         IDENT,

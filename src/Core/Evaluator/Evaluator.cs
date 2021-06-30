@@ -26,6 +26,8 @@ namespace FoxSharp
                     return EvalVarStmt((VarStatement)node, env);
                 case NodeType.RETURN:
                     return EvalReturnStmt((ReturnStatement)node, env);
+                case NodeType.FOR:
+                    return EvalForStmt((ForStatement)node, env);
                 case NodeType.WHILE:
                     return EvalWhileStmt((WhileStatement)node, env);
                 case NodeType.IF:
@@ -102,6 +104,92 @@ namespace FoxSharp
             }
 
             return new ReturnObj(value);
+        }
+        private static IObject EvalForStmt(ForStatement node, Environment env){
+            var indexOrValue = "";
+            var value = node.Value.Value;
+            var hasIndex = false;
+            Environment newEnv = new Environment(env);
+
+            // register symbols in new environment
+            if (node.IndexOrKey != null){
+                indexOrValue = node.IndexOrKey.Value;
+                hasIndex = true;
+                newEnv.Set(indexOrValue, null);
+            }
+            newEnv.Set(value, null);
+
+            // eval the source
+            var sourceObj = Eval(node.Source, env);
+            if (IsError(sourceObj)){
+                return sourceObj;
+            }
+            var type = sourceObj.Type();
+            if (!IsIterable(type)){
+                return NewError("value must be iterable.");
+            }
+            if (type == ObjectType.NUMBER){
+                // iterate number from 0 to number-1
+                var number = ((NumberObj)sourceObj).Value;
+                for (var index = 0; index <= number; index++){
+                    // update values
+                    if (hasIndex){
+                        newEnv.Set(indexOrValue, new NumberObj(index));
+                    }
+                    newEnv.Set(value, new NumberObj(index));
+                    // execute body
+                    var result = Eval(node.Body, newEnv);
+                    if (IsError(result)){
+                        return result;
+                    }
+                }
+            } else if (type == ObjectType.STRING){
+                // iterate each character from string
+                var strValue = ((StringObj)sourceObj).Value;                
+                foreach (char chr in strValue){
+                    // update values
+                    if (hasIndex){
+                        newEnv.Set(indexOrValue, new NumberObj(strValue.IndexOf(chr)));
+                    }
+                    newEnv.Set(value, new StringObj(chr.ToString()));
+                    // execute body
+                    var result = Eval(node.Body, newEnv);
+                    if (IsError(result)){
+                        return result;
+                    }
+                }
+            } else if (type == ObjectType.ARRAY){
+                // iterate each element of array
+                var Elements = ((ArrayObj)sourceObj).Elements;
+                for (var index = 0; index < Elements.Count; index++){
+                    // update values
+                    if (hasIndex){
+                        newEnv.Set(indexOrValue, new NumberObj(index));
+                    }
+                    newEnv.Set(value, Elements[index]);
+                    // execute body
+                    var result = Eval(node.Body, newEnv);
+                    if (IsError(result)){
+                        return result;
+                    }
+                }
+            } else if (type == ObjectType.HASH){
+                // iterate key and value from hash
+                var Pairs = ((HashObj)sourceObj).Pairs;
+                foreach (KeyValuePair<string, IObject> kvp in Pairs){
+                    // update values
+                    if (hasIndex){
+                        newEnv.Set(indexOrValue, new StringObj(kvp.Key));
+                    }
+                    newEnv.Set(value, kvp.Value);
+                    // execute body
+                    var result = Eval(node.Body, newEnv);
+                    if (IsError(result)){
+                        return result;
+                    }
+                }
+            }
+            return NULL;
         }
         private static IObject EvalWhileStmt(WhileStatement node, Environment env)
         {
@@ -609,6 +697,9 @@ namespace FoxSharp
         }
         private static bool IsNumber(ObjectType type){
             return type == ObjectType.NUMBER;
+        }
+        private static bool IsIterable(ObjectType type){
+            return type == ObjectType.ARRAY || type == ObjectType.NUMBER || type == ObjectType.HASH || type == ObjectType.STRING;
         }
         private static bool IsError(IObject obj){
             return obj != null && obj.Type() == ObjectType.ERROR;

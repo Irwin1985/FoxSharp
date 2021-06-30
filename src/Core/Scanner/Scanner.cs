@@ -55,6 +55,7 @@ namespace FoxSharp
             keywords.Add("continue", TokenType.CONTINUE);
             keywords.Add("while", TokenType.WHILE);
             keywords.Add("for", TokenType.FOR);
+            keywords.Add("in", TokenType.IN);
             keywords.Add("smtp", TokenType.SMTP);
         }
 
