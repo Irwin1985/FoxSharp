@@ -10,7 +10,7 @@ cd c:\my-foxsharp\folder\
 do FoxSharpREPL.app
 ```
 
-![FoxSharp REPL]()
+![FoxSharp REPL](https://github.com/Irwin1985/FoxSharp/blob/main/repl.png)
 
 
 
