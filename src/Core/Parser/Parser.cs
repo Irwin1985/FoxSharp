@@ -55,10 +55,14 @@ namespace FoxSharp
             precedence.Add(TokenType.GT_EQ, COMPARISON);
             // term
             precedence.Add(TokenType.PLUS, TERM);
+            precedence.Add(TokenType.PLUS_EQ, TERM);
             precedence.Add(TokenType.MINUS, TERM);
+            precedence.Add(TokenType.MINUS_EQ, TERM);
             // factor
             precedence.Add(TokenType.MUL, FACTOR);
+            precedence.Add(TokenType.MUL_EQ, FACTOR);
             precedence.Add(TokenType.DIV, FACTOR);
+            precedence.Add(TokenType.DIV_EQ, FACTOR);
             // power
             precedence.Add(TokenType.POW, POWER);
             // call
@@ -86,9 +90,13 @@ namespace FoxSharp
 
             // Register infix tokens with its semantic code
             InfixParseFn.Add(TokenType.PLUS, infixParseFn);
+            InfixParseFn.Add(TokenType.PLUS_EQ, infixParseFn);
             InfixParseFn.Add(TokenType.MINUS, infixParseFn);
+            InfixParseFn.Add(TokenType.MINUS_EQ, infixParseFn);
             InfixParseFn.Add(TokenType.MUL, infixParseFn);
+            InfixParseFn.Add(TokenType.MUL_EQ, infixParseFn);
             InfixParseFn.Add(TokenType.DIV, infixParseFn);
+            InfixParseFn.Add(TokenType.DIV_EQ, infixParseFn);
             InfixParseFn.Add(TokenType.POW, infixParseFn);
             InfixParseFn.Add(TokenType.OR, infixParseFn);
             InfixParseFn.Add(TokenType.AND, infixParseFn);

@@ -367,7 +367,9 @@ namespace FoxSharp
             if (ope == "or" || ope == "and"){
                 return EvalLogicalExpression(node, env);
             }
-
+            if (ope == "+=" || ope == "-=" || ope == "*=" || ope == "/="){
+                return EvalShortHandAssignment(node, env);
+            }
             var leftObj = Eval(node.Left, env);
             if (IsError(leftObj)){
                 return leftObj;
@@ -423,7 +425,7 @@ namespace FoxSharp
                 case "!=":
                     return (leftObj.Value != rightObj.Value) ? TRUE : FALSE;
                 default:
-                    return NewError("invalid operator for operands");
+                    return NewError(String.Format("invalid operator for operands: {0}, {1}", leftObj.Type(), rightObj.Type()));
             }
         }
         private static IObject EvalStringExpression(StringObj leftObj, string op, StringObj rightObj){
@@ -472,6 +474,79 @@ namespace FoxSharp
                 default:
                     return NewError("invalid operator: " + node.Operator);
             }
+        }
+        private static IObject EvalShortHandAssignment(InfixExpression node, Environment env){
+            // left hand side must be a NUMBER or STRING.
+            if (node.Left.Type() != NodeType.IDENT){
+                return NewError("left hand side must be a variable name.");
+            }
+            var name = ((Identifier)node.Left).Value;
+            var leftObj = Eval(node.Left, env);
+            if (IsError(leftObj)){
+                return leftObj;
+            }
+            var type = leftObj.Type();
+            if (type != ObjectType.NUMBER && type != ObjectType.STRING){
+                return NewError("left hand side must be a NUMBER or STRING.");
+            }
+            var valObj = Eval(node.Right, env);
+            if (IsError(valObj)){
+                return valObj;
+            }
+            IObject newObj = null;
+            if (type == ObjectType.NUMBER){
+                if (valObj.Type() != ObjectType.NUMBER){
+                    return NewError("value must be a NUMBER");
+                }
+                var value = ((NumberObj)valObj).Value;
+                var numObj = (NumberObj)leftObj;
+                switch (node.Operator)
+                {
+                    case "+=":
+                        numObj.Value += value;
+                        break;
+                    case "-=":
+                        numObj.Value -= value;
+                        break;
+                    case "*=":
+                        numObj.Value *= value;
+                        break;
+                    case "/=":
+                        if (value == 0){
+                            return NewError("division by zero.");
+                        }
+                        numObj.Value /= value;
+                        break;
+                    default:
+                        break;
+                }
+                newObj = numObj;
+            } else if (type == ObjectType.STRING){
+                if (valObj.Type() != ObjectType.STRING)
+                {
+                    return NewError("value must be a STRING");
+                }
+                var value = ((StringObj)valObj).Value;
+                var strObj = (StringObj)leftObj;
+                switch (node.Operator)
+                {
+                    case "+=":
+                        strObj.Value += value;
+                        break;
+                    case "-=":
+                        strObj.Value = strObj.Value.TrimEnd() + value;
+                        break;
+                    case "*=":
+                    case "/=":
+                        return NewError("invalid operator for string types.");
+                }
+                newObj = strObj;
+            }
+            if (newObj != null){
+                env.GetAndSet(name, newObj);
+                return newObj;
+            }
+            return NULL;
         }
         private static IObject EvaluateRightLogicalOperand(INode node, Environment env){
             var rightObj = Eval(node, env);

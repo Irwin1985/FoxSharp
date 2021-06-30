@@ -32,5 +32,13 @@ namespace FoxSharp
             }
             return null;
         }
+        public void GetAndSet(string name, IObject newValue){
+            if (Store.ContainsKey(name)){
+                Store[name] = newValue;
+            }
+            if (Outer != null){
+                Outer.GetAndSet(name, newValue);
+            }
+        }
     }
 }
