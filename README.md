@@ -20,7 +20,7 @@ do FoxSharpREPL.app
 ### Running code
 FoxSharp will create a Screen Property Called **Foxsharp** which you can execute from.
 
-```
+```XBase
 * Create FoxSharp class
 do FoxSharp.prg
 if _screen.foxsharp.hasErrors()
@@ -29,7 +29,7 @@ endif
 ```
 Put the code above in any place of your main PRG file. If there's no errors then the FoxSharp property will be created in you main Screen thus you can run code anywhere in your program.
 
-```
+```XBase
 text to lcScript noshow
 // sample code
 var add = fn(x, y) { return x + y; };
