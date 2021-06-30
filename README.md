@@ -1,6 +1,19 @@
 # FoxSharp
 Domain Specific Language for Visual FoxPro and C#
 
+### Play with FoxSharp
+
+You can play for a while with the language by lauching the FoxSharpREPL.app inside your Visual FoxPro IDE
+
+```
+cd c:\my-foxsharp\folder\
+do FoxSharpREPL.app
+```
+
+![FoxSharp REPL]()
+
+
+
 ### The very basics of FoxSharp
 ```Javascript
 // single line comment
