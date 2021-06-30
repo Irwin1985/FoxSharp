@@ -1,5 +1,5 @@
 # FoxSharp
-Glue programming language between Visual FoxPro and C#
+Domain Specific Language for Visual FoxPro and C#
 
 ### The very basics of FoxSharp
 ```Javascript
