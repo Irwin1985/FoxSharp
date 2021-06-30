@@ -6,6 +6,7 @@ endif
 define class foxSharpclass as Custom 
 	errorIndex = 0
 	dimension errors(1)
+	fsVersion = "v1.0 - 30/06/2021 17:32"
 		
 	function init				
 		this.checkdependecy('wwDotNetBridge.prg')
@@ -43,17 +44,26 @@ define class foxSharpclass as Custom
 				if type('msg') == 'C'
 					messagebox(msg, 48, 'foxSharp errors')
 				endif
-			endfor
+			endfor			
 		endif
+		* Reset errors
+		dimension this.errors[1]
+		this.errors[1] = ''
 	endfunc
-	
-	function run(source) 
+	function runFile(fileName)
+		if !file(fileName)
+			messagebox("File not found: " + fileName, 16, "RunFile")
+		endif
+		return this.runCode(filetostr(fileName))
+	endfunc
+	function runCode(source) 
 		try
+			result = ""
 			loBridge = GetwwDotnetBridge()
 			if loBridge.LoadAssembly("FoxSharp.dll")
 				loFoxSharp = loBridge.CreateInstance("FoxSharp.Core")				
 				if !isnull(loFoxSharp)
-					loFoxSharp.Run(source)
+					result = loFoxSharp.Run(source)
 				else
 					this.pushError('could not create the foxSharp instance')	
 				endif				
@@ -66,6 +76,7 @@ define class foxSharpclass as Custom
 			store .null. to loFoxSharp
 			release loFoxSharp
 		endtry
+		return result
 	endfunc
 	
 enddefine
