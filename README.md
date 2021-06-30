@@ -9,10 +9,13 @@ You can play for a while with the language by lauching the FoxSharpREPL.app insi
 cd c:\my-foxsharp\folder\
 do FoxSharpREPL.app
 ```
-
 ![FoxSharp REPL](https://github.com/Irwin1985/FoxSharp/blob/main/repl.png)
 
 
+### Using FoxSharp inside a real Project
+. Add **foxsharp.prg** to your project files.
+. Bring **foxsharp.prg** to scope with <code>SET PROCEDURE TO foxsharp.prg ADDITIVE<code>
+. Hit the command DO foxSharp.prg
 
 ### The very basics of FoxSharp
 ```Javascript
