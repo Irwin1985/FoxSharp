@@ -12,10 +12,37 @@ do FoxSharpREPL.app
 ![FoxSharp REPL](https://github.com/Irwin1985/FoxSharp/blob/main/repl.png)
 
 
-### Using FoxSharp inside a real Project
-- Add **foxsharp.prg** to your project files.
+### Setup FoxSharp inside a real Project
+- Add **foxsharp.prg** to your project.
 - Bring **foxsharp.prg** to scope with ```SET PROCEDURE TO foxsharp.prg ADDITIVE```
 - Hit the command ```DO foxSharp.prg```
+
+### Running code
+FoxSharp will create a Screen Property Called **Foxsharp** which you can execute from.
+
+```
+* Create FoxSharp class
+do FoxSharp.prg
+if _screen.foxsharp.hasErrors()
+	_screen.foxsharp.printErrors()
+endif
+```
+Put the code above in any place of your main PRG file. If there's no errors then the FoxSharp property will be created in you main Screen thus you can run code anywhere in your program.
+
+```
+text to lcScript noshow
+// sample code
+var add = fn(x, y) { return x + y; };
+add(10, 15);
+endtext
+lcResult = _screen.FoxSharp.runCode(lcScript)
+if _screen.foxsharp.hasErrors()
+  _screen.foxsharp.printErrors()
+endif
+if type('lcResult') == 'C'
+  messagebox("Output from FoxSharp: " + lcResult)
+endif
+```
 
 ### The very basics of FoxSharp
 ```Javascript
