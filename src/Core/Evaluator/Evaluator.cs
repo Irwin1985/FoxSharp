@@ -507,6 +507,10 @@ namespace FoxSharp
             if (ope == "+=" || ope == "-=" || ope == "*=" || ope == "/="){
                 return EvalShortHandAssignment(node, env);
             }
+            // check for dot notation
+            if (node.Operator == "."){
+                return EvalDotNotation(node, env);
+            }
             var leftObj = Eval(node.Left, env);
             if (IsError(leftObj)){
                 return leftObj;
@@ -684,6 +688,24 @@ namespace FoxSharp
                 return newObj;
             }
             return NULL;
+        }
+        private static IObject EvalDotNotation(InfixExpression node, Environment env)
+        {
+            var leftObj = Eval(node.Left, env);
+            if (IsError(leftObj)){
+                return leftObj;
+            }
+            // left hand side must be a hash table
+            if (leftObj.Type() != ObjectType.HASH){
+                return NewError("left operand must be a hash table.");
+            }            
+            var hashObj = (HashObj)leftObj;
+            // create new environment for hash table.
+            Environment newEnv = new Environment();
+            foreach(KeyValuePair<string, IObject> kvp in hashObj.Pairs){
+                newEnv.Set(kvp.Key, kvp.Value);
+            }
+            return Eval(node.Right, newEnv);
         }
         private static IObject EvaluateRightLogicalOperand(INode node, Environment env){
             var rightObj = Eval(node, env);
